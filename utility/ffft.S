@@ -1,3 +1,5 @@
+#if defined(__AVR__)
+
 ;-----------------------------------------------------------------------------;
 ; Fixed-point FFT routines for megaAVRs                        (C)ChaN, 2005
 ;-----------------------------------------------------------------------------;
@@ -32,6 +34,7 @@
 ; to handle 64 points only, for the Circuit Playground microphone library.
 ; Original FFFT code can be found on GitHub.
 ;----------------------------------------------------------------------------;
+
 
 .list
 
@@ -429,3 +432,4 @@ fmuls_f:
 	ret
 .endfunc
 
+#endif

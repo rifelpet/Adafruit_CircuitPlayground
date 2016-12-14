@@ -96,6 +96,7 @@ void Adafruit_CPlay_Speaker::say(const uint8_t *addr) {
 
 	for(;;) {
 		while(((nowTime = micros()) - prevTime) < USEC);
+#if defined(__AVR__)
 		OCR4A    = nextPwm;
 		prevTime = nowTime;
 
@@ -128,6 +129,7 @@ void Adafruit_CPlay_Speaker::say(const uint8_t *addr) {
 			}
 			iCount = 0;
 		}
+#endif
 
 		if(synthPeriod) { // Voiced source
 			if(++periodCounter >= synthPeriod) periodCounter = 0;

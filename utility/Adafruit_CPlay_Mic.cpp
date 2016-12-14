@@ -24,6 +24,7 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
   nSamples = (9615L * ms + 500) / 1000;
   if(!nSamples) nSamples = 1;
 
+#if defined(__AVR__)
   channel     = analogPinToChannel(4); // Pin A4 to ADC channel
   admux_save  = ADMUX;                 // Save ADC config registers
   adcsra_save = ADCSRA;
@@ -64,6 +65,7 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
   if(adcMin > DC_OFFSET) adcMin = DC_OFFSET;
   if(adcMax > DC_OFFSET) adcMax = DC_OFFSET;
   if(adcMin > adcMax)    adcMax = adcMin;
+#endif
 
   return adcMax;
 }
@@ -80,6 +82,8 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
 void Adafruit_CPlay_Mic::capture(int16_t *buf, uint8_t nSamples) {
   uint8_t admux_save, adcsra_save, adcsrb_save, timsk0_save, channel;
   int16_t adc;
+
+#if defined(__AVR__)
 
   channel     = analogPinToChannel(4); // Pin A4 to ADC channel
   admux_save  = ADMUX;                 // Save ADC config registers
@@ -124,6 +128,7 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint8_t nSamples) {
   ADCSRB = adcsrb_save;
   ADCSRA = adcsra_save;
   (void)analogRead(A4);                // Purge residue from ADC register
+#endif
 }
 
 // -------------------------------------------------------------------------

@@ -3,9 +3,17 @@
 
 boolean Adafruit_CircuitPlayground::begin(uint8_t brightness) {
   pinMode(CPLAY_REDLED, OUTPUT);
+
+#if defined(__AVR__)
   pinMode(CPLAY_SLIDESWITCHPIN, INPUT);
   pinMode(CPLAY_LEFTBUTTON, INPUT);
   pinMode(CPLAY_RIGHTBUTTON, INPUT);
+#elif defined(__SAMD21G18A__)
+  pinMode(CPLAY_SLIDESWITCHPIN, INPUT_PULLUP);
+  pinMode(CPLAY_LEFTBUTTON, INPUT_PULLDOWN);
+  pinMode(CPLAY_RIGHTBUTTON, INPUT_PULLDOWN);
+#endif
+
   pinMode(CPLAY_BUZZER, OUTPUT);
   pinMode(CPLAY_CAPSENSE_SHARED, OUTPUT);
 
